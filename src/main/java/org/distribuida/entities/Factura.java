@@ -10,12 +10,12 @@ public class Factura {
     private Double totalNeto;
     private Double iva;
     private Double total;
-    private cliente cliente;
+    private Cliente cliente;
 
     public Factura() {
     }
 
-    public Factura(int idFactura, Double totalNeto, Double iva, Double total, cliente cliente, Date fecha, String numFactura) {
+    public Factura(int idFactura, Double totalNeto, Double iva, Double total, Cliente cliente, Date fecha, String numFactura) {
         this.idFactura = idFactura;
         this.totalNeto = totalNeto;
         this.iva = iva;
@@ -73,11 +73,11 @@ public class Factura {
         this.total = total;
     }
 
-    public cliente getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(cliente cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 

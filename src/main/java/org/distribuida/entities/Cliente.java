@@ -1,6 +1,6 @@
 package org.distribuida.entities;
 
-public class cliente {
+public class Cliente {
     private int idCliente;
     private String cedula;
     private String nombre;
@@ -9,10 +9,10 @@ public class cliente {
     private String telefono;
     private String correo;
 
-    public cliente(){}
+    public Cliente(){}
 
 
-    public cliente(int idCliente,String cedula, String nombre, String apellido, String direccion, String telefono, String correo ){
+    public Cliente(int idCliente, String cedula, String nombre, String apellido, String direccion, String telefono, String correo ){
         this.idCliente = idCliente;
         this.cedula = cedula;
         this.nombre = nombre;
