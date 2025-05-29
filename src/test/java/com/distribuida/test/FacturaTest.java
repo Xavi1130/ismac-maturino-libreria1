@@ -27,7 +27,7 @@ public class FacturaTest {
 
         factura = new Factura();
         factura.setIdFactura(1);
-        factura.setNumFactura("FAC-0001");
+        factura.setNumFactura("FAC-00001");
         factura.setFecha(new Date());
         factura.setTotalNeto(100.00);
         factura.setIva(15.00);
