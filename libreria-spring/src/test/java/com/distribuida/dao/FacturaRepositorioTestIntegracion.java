@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
@@ -31,6 +33,8 @@ public class FacturaRepositorioTestIntegracion {
     public void findAll(){
         List<Factura> facturas = facturaRepository.findAll();
 
+        assertNotNull(facturas);
+
         for (Factura item: facturas){
             System.out.println(item.toString());
         }
@@ -40,6 +44,8 @@ public class FacturaRepositorioTestIntegracion {
     public void findOne(){
         Optional<Factura> factura = facturaRepository.findById(1);
 
+        assertTrue(factura.isPresent());
+
         System.out.println(factura.toString());
     }
 
@@ -47,6 +53,9 @@ public class FacturaRepositorioTestIntegracion {
     public void save(){
         Factura factura = new Factura();
         Optional<Cliente> cliente = clienteRepository.findById(1);
+
+        assertTrue(cliente.isPresent());
+
         factura.setIdFactura(0);
         factura.setNumFactura("FAC-0099");
         factura.setFecha(new Date());
@@ -55,32 +64,41 @@ public class FacturaRepositorioTestIntegracion {
         factura.setTotal(115.00);
         factura.setCliente(cliente.orElse(null));
 
-        facturaRepository.save(factura);
+        Factura facturaGuardada = facturaRepository.save(factura);
+        assertEquals(115.00, facturaGuardada.getTotal());
 
     }
 
 
     @Test
     public void update(){
-        Optional<Factura> facturaExistente = facturaRepository.findById(1);
+        Optional<Factura> facturaExistente = facturaRepository.findById(89);
 
         Optional<Cliente> cliente = clienteRepository.findById(2);
+
+        assertTrue(cliente.isPresent());
+
 
         facturaExistente.orElse(null).setNumFactura("FAC-0100");
         facturaExistente.orElse(null).setFecha(new Date());
         facturaExistente.orElse(null).setTotalNeto(200.00);
         facturaExistente.orElse(null).setIva(30.00);
-        facturaExistente.orElse(null).setTotal(200.00);
+        facturaExistente.orElse(null).setTotal(230.00);
         facturaExistente.orElse(null).setCliente(cliente.orElse(null));
 
-        facturaRepository.save(facturaExistente.orElse(null));
+        Factura facturaActualizada = facturaRepository.save(facturaExistente.orElse(null));
+
+        assertEquals(230.00, facturaActualizada.getTotal());
 
     }
 
     @Test
     public void delete(){
         if (facturaRepository.existsById(86)){
+
             facturaRepository.deleteById(86);
+            Optional<Factura> facturaEliminada = facturaRepository.findById(8);
+            assertFalse(facturaEliminada.isPresent());
         }
     }
 
