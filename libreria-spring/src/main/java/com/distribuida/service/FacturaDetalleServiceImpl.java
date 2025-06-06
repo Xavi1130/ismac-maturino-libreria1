@@ -29,6 +29,8 @@ public class FacturaDetalleServiceImpl implements FacturaDetalleService {
     @Autowired
     private AutorRepository autorRepository;
 
+    // -------- Métodos estándar (reciben entidades ya armadas) --------
+
     @Override
     public List<FacturaDetalle> findAll() {
         return facturaDetalleRepository.findAll();
@@ -40,6 +42,33 @@ public class FacturaDetalleServiceImpl implements FacturaDetalleService {
     }
 
     @Override
+    public FacturaDetalle save(FacturaDetalle facturaDetalle) {
+        return facturaDetalleRepository.save(facturaDetalle);
+    }
+
+    @Override
+    public FacturaDetalle update(int id, FacturaDetalle facturaDetalle) {
+        FacturaDetalle actual = facturaDetalleRepository.findById(id).orElse(null);
+        if (actual != null) {
+            actual.setCantidad(facturaDetalle.getCantidad());
+            actual.setSubtotal(facturaDetalle.getSubtotal());
+            actual.setLibro(facturaDetalle.getLibro());
+            actual.setFactura(facturaDetalle.getFactura());
+            actual.setAutor(facturaDetalle.getAutor());
+            return facturaDetalleRepository.save(actual);
+        }
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+        if (facturaDetalleRepository.existsById(id)) {
+            facturaDetalleRepository.deleteById(id);
+        }
+    }
+
+    // -------- Métodos alternativos (reciben IDs para relaciones) --------
+
     public FacturaDetalle save(FacturaDetalle detalle, int idLibro, int idFactura, int idAutor) {
         Optional<Libro> libro = libroRepository.findById(idLibro);
         Optional<Factura> factura = facturaRepository.findById(idFactura);
@@ -55,29 +84,22 @@ public class FacturaDetalleServiceImpl implements FacturaDetalleService {
         return null; // No se pudo guardar porque alguna FK no existe
     }
 
-    @Override
     public FacturaDetalle update(int id, int idLibro, int idFactura, int idAutor, FacturaDetalle nuevoDetalle) {
-        FacturaDetalle detalleExistente = findOne(id);
+        FacturaDetalle existente = facturaDetalleRepository.findById(id).orElse(null);
         Optional<Libro> libro = libroRepository.findById(idLibro);
         Optional<Factura> factura = facturaRepository.findById(idFactura);
         Optional<Autor> autor = autorRepository.findById(idAutor);
 
-        if (detalleExistente == null) return null;
+        if (existente == null) return null;
 
-        detalleExistente.setCantidad(nuevoDetalle.getCantidad());
-        detalleExistente.setSubtotal(nuevoDetalle.getSubtotal());
-        detalleExistente.setLibro(libro.orElse(null));
-        detalleExistente.setFactura(factura.orElse(null));
-        detalleExistente.setAutor(autor.orElse(null));
+        existente.setCantidad(nuevoDetalle.getCantidad());
+        existente.setSubtotal(nuevoDetalle.getSubtotal());
+        existente.setLibro(libro.orElse(null));
+        existente.setFactura(factura.orElse(null));
+        existente.setAutor(autor.orElse(null));
 
-        return facturaDetalleRepository.save(detalleExistente);
-    }
-
-    @Override
-    public void delete(int id) {
-        if (facturaDetalleRepository.existsById(id)) {
-            facturaDetalleRepository.deleteById(id);
-        }
+        return facturaDetalleRepository.save(existente);
     }
 }
+
 
