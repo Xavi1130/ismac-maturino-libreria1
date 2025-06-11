@@ -50,11 +50,11 @@ public class CategoriaRepositorioTestIntegracion {
 
     @Test
     public void update() {
-        // Primero, guardar una categoría para asegurar que exista
+
         Categoria nuevaCategoria = new Categoria(0, "Original", "Descripción original");
         Categoria guardada = categoriaRepository.save(nuevaCategoria);
 
-        // Ahora actualizarla
+
         guardada.setCategoria("Hogar");
         guardada.setDescripcion("Productos para el hogar");
 
