@@ -17,4 +17,3 @@ public interface LibroService {
     void delete(int id);
 }
 
-

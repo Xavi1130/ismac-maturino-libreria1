@@ -25,8 +25,6 @@ public class Factura {
     @Column(name = "total")
     private Double total;
 
-    //Patron de inyeccion de dependencias
-    //Private int idCliente foreing key en bd
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;

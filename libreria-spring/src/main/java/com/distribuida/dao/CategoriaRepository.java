@@ -10,4 +10,3 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
     // Método personalizado para buscar por nombre de categoría
     Categoria findByCategoria(String categoria);
 }
-
