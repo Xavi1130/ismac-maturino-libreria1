@@ -11,7 +11,7 @@ import java.util.Optional;
 // Aquí se gestiona la lógica de negocio de Autor
 
 @Service
-public class AutorServiceImpl implements AutorService {
+public  class AutorServiceImpl implements AutorService {
 
     @Autowired
     private AutorRepository autorRepository;
@@ -21,10 +21,10 @@ public class AutorServiceImpl implements AutorService {
         return autorRepository.findAll();
     }
 
-    @Override
-    public Autor findById(int id) {
-        return autorRepository.findById(id).orElse(null);
-    }
+//    @Override
+//    public Autor findById(int id) {
+//        return autorRepository.findById(id).orElse(null);
+//    }
 
     @Override
     public Autor findOne(int id) {
@@ -38,21 +38,17 @@ public class AutorServiceImpl implements AutorService {
     }
 
     @Override
-    public Autor update(int id, Autor autorNuevo) {
-        Autor autorExistente = findOne(id);
+    public Autor update(int id, Autor autor){
+        Optional<Autor> autorExistente = autorRepository.findById(id);
+        autorExistente.orElse(null).setNombre(autor.getNombre());
+        autorExistente.orElse(null).setApellido(autor.getApellido());
+        autorExistente.orElse(null).setPais(autor.getPais());
+        autorExistente.orElse(null).setDireccion(autor.getDireccion());
+        autorExistente.orElse(null).setTelefono(autor.getTelefono());
+        autorExistente.orElse(null).setCorreo(autor.getCorreo());
 
-        if (autorExistente == null) {
-            return null;
-        }
+        return autorRepository.save(autorExistente.orElse(null));
 
-        autorExistente.setNombre(autorNuevo.getNombre());
-        autorExistente.setApellido(autorNuevo.getApellido());
-        autorExistente.setPais(autorNuevo.getPais());
-        autorExistente.setDireccion(autorNuevo.getDireccion());
-        autorExistente.setTelefono(autorNuevo.getTelefono());
-        autorExistente.setCorreo(autorNuevo.getCorreo());
-
-        return autorRepository.save(autorExistente);
     }
 
     @Override
@@ -62,4 +58,5 @@ public class AutorServiceImpl implements AutorService {
         }
     }
 }
+
 

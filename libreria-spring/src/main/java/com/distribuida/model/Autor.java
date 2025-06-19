@@ -1,6 +1,10 @@
 package com.distribuida.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "autor")
@@ -29,10 +33,18 @@ public class Autor {
     @Column(name = "correo")
     private String correo;
 
+    // ────────────── Relación con Libro ──────────────
+    @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Libro> libros = new ArrayList<>();
+
+    // ────────────── Constructores ──────────────
+
     public Autor() {
     }
 
-    public Autor(int idAutor, String nombre, String apellido, String pais, String direccion, String telefono, String correo) {
+    public Autor(int idAutor, String nombre, String apellido, String pais,
+                 String direccion, String telefono, String correo) {
         this.idAutor = idAutor;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -41,6 +53,8 @@ public class Autor {
         this.telefono = telefono;
         this.correo = correo;
     }
+
+    // ────────────── Getters / Setters ──────────────
 
     public int getIdAutor() {
         return idAutor;
@@ -98,6 +112,16 @@ public class Autor {
         this.correo = correo;
     }
 
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
+    }
+
+    // ────────────── toString ──────────────
+
     @Override
     public String toString() {
         return "Autor{" +
@@ -111,4 +135,5 @@ public class Autor {
                 '}';
     }
 }
+
 

@@ -4,11 +4,11 @@ import com.distribuida.model.Autor;
 import java.util.List;
 
 public interface AutorService {
-    List<Autor> findAll();
-    Autor findById(int id);
-    Autor findOne(int id);
-    Autor save(Autor autor);
-    Autor update(int id, Autor autor);
-    void delete(int id);
+    public List<Autor> findAll();
+    //Autor findById(int id);
+    public Autor findOne(int id);
+    public Autor save(Autor autor);
+    public Autor update(int id, Autor autor);
+    public void delete(int id);
 }
 
