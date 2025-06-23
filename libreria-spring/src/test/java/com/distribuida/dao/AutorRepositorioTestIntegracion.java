@@ -42,7 +42,7 @@ public class AutorRepositorioTestIntegracion {
 
     @Test
     public void save() {
-        Autor autor = new Autor(0, "Gabriel", "García Márquez", "Colombia", "Aracataca", "0987654321", "gabriel@example.com");
+        Autor autor = new Autor(0, "Gabriel", "García Márquez");
         autorRepository.save(autor);
         assertNotNull(autor.getIdAutor(), "El autor guardado debe tener un ID.");
         assertEquals("Gabriel", autor.getNombre());
